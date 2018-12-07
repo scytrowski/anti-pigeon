@@ -2,11 +2,17 @@ from abc import abstractmethod
 
 
 class Detector:
+    """
+    Detector abstraction
+    """
     @abstractmethod
     def check(self): pass
 
 
 class AggregatedDetector(Detector):
+    """
+    Aggregates results of many detectors
+    """
     def __init__(self, aggregators):
         self._aggregators = aggregators
 
@@ -14,7 +20,10 @@ class AggregatedDetector(Detector):
         return all(map(lambda d: d.check(), self._aggregators))
 
 
-class InterfaceBackedDetector(Detector):
+class HALBackedDetector(Detector):
+    """
+    Uses HAL interfaces in detection process
+    """
     def __init__(self, hal):
         self._hal = hal
 
@@ -22,7 +31,10 @@ class InterfaceBackedDetector(Detector):
     def check(self): pass
 
 
-class StrainGaugeDetector(InterfaceBackedDetector):
+class StrainGaugeDetector(HALBackedDetector):
+    """
+    Strain gauge detector implementation
+    """
     def __init__(self, hal, threshold):
         super().__init__(hal)
         self._threshold = threshold
@@ -32,7 +44,10 @@ class StrainGaugeDetector(InterfaceBackedDetector):
         return strain_gauge_probe >= self._threshold
 
 
-class CameraDetector(InterfaceBackedDetector):
+class CameraDetector(HALBackedDetector):
+    """
+    Camera detector implementation
+    """
     def __init__(self, hal, image_analyzer):
         super().__init__(hal)
         self._image_analyzer = image_analyzer
