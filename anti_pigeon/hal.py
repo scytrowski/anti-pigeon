@@ -7,6 +7,12 @@ class HAL:
     """
 
     @abstractmethod
+    def setup(self): pass
+
+    @abstractmethod
+    def cleanup(self): pass
+
+    @abstractmethod
     def strain_gauge(self): pass
 
     @abstractmethod
