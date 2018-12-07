@@ -5,6 +5,7 @@ class Handler:
     """
     Handler abstraction
     """
+
     @abstractmethod
     def handle(self): pass
 
@@ -13,6 +14,7 @@ class AggregatedHandler(Handler):
     """
     Aggregates many handlers
     """
+
     def __init__(self, handlers):
         self._handlers = handlers
 
@@ -25,6 +27,7 @@ class HALBackedHandler(Handler):
     """
     Uses HAL interfaces in detection process
     """
+
     def __init__(self, hal):
         self._hal = hal
 
@@ -36,6 +39,7 @@ class WoodcutterAxeHandler(HALBackedHandler):
     """
     CHOP, CHOP, CHOP!!!
     """
+
     def __init__(self, hal):
         super().__init__(hal)
 

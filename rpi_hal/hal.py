@@ -5,6 +5,7 @@ class RPiHAL(HAL):
     """
     Default HAL used in the project
     """
+
     def strain_gauge(self):
         pass
 

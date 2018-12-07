@@ -6,6 +6,7 @@ class Facade:
     """
     Used to connect all the submodules
     """
+
     def __init__(self, detectors, handlers):
         self._detector = AggregatedDetector(detectors)
         self._handler = AggregatedHandler(handlers)

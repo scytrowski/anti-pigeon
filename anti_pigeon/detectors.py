@@ -5,6 +5,7 @@ class Detector:
     """
     Detector abstraction
     """
+
     @abstractmethod
     def check(self): pass
 
@@ -12,18 +13,22 @@ class Detector:
 class AggregatedDetector(Detector):
     """
     Aggregates results of many detectors
+
+    Note that detectors order MATTERS
     """
-    def __init__(self, aggregators):
-        self._aggregators = aggregators
+
+    def __init__(self, detectors):
+        self._detectors = detectors
 
     def check(self):
-        return all(map(lambda d: d.check(), self._aggregators))
+        return all(map(lambda d: d.check(), self._detectors))
 
 
 class HALBackedDetector(Detector):
     """
     Uses HAL interfaces in detection process
     """
+
     def __init__(self, hal):
         self._hal = hal
 
@@ -35,6 +40,7 @@ class StrainGaugeDetector(HALBackedDetector):
     """
     Strain gauge detector implementation
     """
+
     def __init__(self, hal, threshold):
         super().__init__(hal)
         self._threshold = threshold
@@ -48,6 +54,7 @@ class CameraDetector(HALBackedDetector):
     """
     Camera detector implementation
     """
+
     def __init__(self, hal, image_analyzer):
         super().__init__(hal)
         self._image_analyzer = image_analyzer
