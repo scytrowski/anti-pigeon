@@ -2,6 +2,19 @@ from abc import abstractmethod
 
 
 class Detector:
+    @abstractmethod
+    def check(self): pass
+
+
+class AggregatedDetector(Detector):
+    def __init__(self, aggregators):
+        self._aggregators = aggregators
+
+    def check(self):
+        return all(map(lambda d: d.check(), self._aggregators))
+
+
+class InterfaceBackedDetector(Detector):
     def __init__(self, hal):
         self._hal = hal
 
@@ -9,7 +22,7 @@ class Detector:
     def check(self): pass
 
 
-class StrainGaugeDetector(Detector):
+class StrainGaugeDetector(InterfaceBackedDetector):
     def __init__(self, hal, threshold):
         super().__init__(hal)
         self._threshold = threshold
@@ -19,7 +32,7 @@ class StrainGaugeDetector(Detector):
         return strain_gauge_probe >= self._threshold
 
 
-class CameraDetector(Detector):
+class CameraDetector(InterfaceBackedDetector):
     def __init__(self, hal, image_analyzer):
         super().__init__(hal)
         self._image_analyzer = image_analyzer

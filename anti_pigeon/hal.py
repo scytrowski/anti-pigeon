@@ -18,3 +18,9 @@ class StrainGaugeInterface:
 class CameraInterface:
     @abstractmethod
     def probe(self): pass
+
+
+# Chop some pigeo... ups, wood!
+class WoodcutterAxeInterface:
+    @abstractmethod
+    def chop(self): pass
